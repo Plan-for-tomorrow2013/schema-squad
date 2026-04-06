@@ -19,7 +19,7 @@ export async function getAllCustomisationOrders(
 }
 
 export async function getAllMenuItems(db = connection): Promise<MenuItem[]> {
-  return db('menu_item').select()
+  return db('menu_items').select()
 }
 
 export async function getAllMenuOrders(db = connection): Promise<MenuOrder[]> {
