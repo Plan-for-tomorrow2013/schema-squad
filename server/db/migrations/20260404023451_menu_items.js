@@ -3,6 +3,8 @@ export function up(knex) {
     table.increments('id').primary()
     table.string('name')
     table.decimal('price', 10, 2)
+    table.string('description').defaultTo('')
+    table.string('image').defaultTo('')
   })
 }
 
