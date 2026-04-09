@@ -9,7 +9,14 @@ import { Receipt } from '../../models/receipt.ts'
 export async function getAllCustomisationItems(
   db = connection,
 ): Promise<CustomisationItem[]> {
-  return db('customisation_item').select()
+  return db('custom_items').select()
+}
+
+export async function getCustomisationItem(
+  menu_id: number,
+): Promise<CustomisationItem[]> {
+  const db = connection
+  return db('custom_items').where('menu_item_id', menu_id).select()
 }
 
 export async function getAllCustomisationOrders(
