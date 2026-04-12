@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react'
 import { useMenu } from '../hooks/useMenu.ts'
 import { MenuItem } from '../../models/menuItem.ts'
 import MenuItemModal from './MenuItemModal.tsx'
+import {useCart} from '../hooks/useCart.ts'
+import CartModal from './CartModal.tsx'
+
 
 const images = import.meta.glob('./images/*.png', { eager: true })
 const imageMap: Record<string, string> = {}
@@ -21,16 +24,20 @@ function getRandomIndex(current: number, total: number): number {
 
 function App() {
   const { data } = useMenu()
+  const { cart } = useCart() 
   const [currentIndex, setCurrentIndex] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
+  const [cartOpen, setCartOpen] =useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => getRandomIndex(prev, imageList.length))
-    }, 5000)
+    }, 3000)
     return () => clearInterval(interval)
   }, [])
+
+  const totalQuantity = cart.reduce((acc, item)=> acc + item.quantity,0)
 
   return (
     <>
@@ -50,6 +57,23 @@ function App() {
         >
           {menuOpen ? 'Hide Menu ▲' : 'View Menu ▼'}
         </button>
+
+        
+        <button
+          className="view-menu-btn"
+          onClick={() => setCartOpen((prev) => !prev)}
+        >
+          {cartOpen ? 'Hide Cart ▲' : `View Cart (${totalQuantity})`}
+        </button>
+
+        {cartOpen && (
+          <CartModal
+            onClose={() => setCartOpen(false)}
+            imageMap={imageMap}
+          />
+        )}
+
+
         {menuOpen && (
           <div className="menu-dropdown">
             {data &&
