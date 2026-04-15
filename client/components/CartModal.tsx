@@ -4,9 +4,10 @@ import CartItem from './CartItem.tsx'
 interface Props {
   onClose: () => void
   imageMap: Record<string, string>
+  onCheckout: () => void
 }
 
-function CartModal({ onClose, imageMap }: Props) {
+function CartModal({ onClose, imageMap, onCheckout }: Props) {
   const { cart } = useCart()
   const { mutate: clearCart } = useClearCart()
 
@@ -24,9 +25,7 @@ function CartModal({ onClose, imageMap }: Props) {
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
     >
       <div className="modal" role="dialog" aria-modal="true">
-        <button onClick={onClose}>
-          x
-        </button>
+        <button onClick={onClose}>x</button>
         <h2>Your Order</h2>
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
@@ -46,21 +45,15 @@ function CartModal({ onClose, imageMap }: Props) {
               <p>
                 Total: <span>${totalAmount.toFixed(2)}</span>
               </p>
-              <button
-                onClick={() => clearCart()}
-              >
-                Clear Cart
-              </button>
+              <button onClick={() => clearCart()}>Clear Cart</button>
 
-              <button onClick={() => {
-                alert('Order Placed!')
-                clearCart()
-                onClose()
-              }}>
+              <button
+                onClick={() => {
+                  onCheckout()
+                }}
+              >
                 Checkout
               </button>
-
-
             </div>
           </>
         )}
