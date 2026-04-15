@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { useMenu } from '../hooks/useMenu.ts'
 import { MenuItem } from '../../models/menuItem.ts'
 import MenuItemModal from './MenuItemModal.tsx'
-import {useCart} from '../hooks/useCart.ts'
+import { useCart, useClearCart } from '../hooks/useCart.ts'
 import CartModal from './CartModal.tsx'
-
+import ReceiptModal from './ReceiptModal.tsx'
 
 const images = import.meta.glob('./images/*.png', { eager: true })
 const imageMap: Record<string, string> = {}
@@ -24,11 +24,13 @@ function getRandomIndex(current: number, total: number): number {
 
 function App() {
   const { data } = useMenu()
-  const { cart } = useCart() 
+  const { cart } = useCart()
+  const { mutate: clearCart } = useClearCart()
   const [currentIndex, setCurrentIndex] = useState(0)
   const [menuOpen, setMenuOpen] = useState(false)
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
-  const [cartOpen, setCartOpen] =useState(false)
+  const [cartOpen, setCartOpen] = useState(false)
+  const [showReceipt, setShowReceipt] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -37,7 +39,21 @@ function App() {
     return () => clearInterval(interval)
   }, [])
 
-  const totalQuantity = cart.reduce((acc, item)=> acc + item.quantity,0)
+  const totalQuantity = cart.reduce((acc, item) => acc + item.quantity, 0)
+  const totalAmount = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  )
+
+  const handleCheckout = () => {
+    setShowReceipt(true)
+    setCartOpen(false)
+  }
+
+  const handleReceiptClose = () => {
+    clearCart()
+    setShowReceipt(false)
+  }
 
   return (
     <>
@@ -58,7 +74,6 @@ function App() {
           {menuOpen ? 'Hide Menu ▲' : 'View Menu ▼'}
         </button>
 
-        
         <button
           className="view-menu-btn"
           onClick={() => setCartOpen((prev) => !prev)}
@@ -70,9 +85,9 @@ function App() {
           <CartModal
             onClose={() => setCartOpen(false)}
             imageMap={imageMap}
+            onCheckout={handleCheckout}
           />
         )}
-
 
         {menuOpen && (
           <div className="menu-dropdown">
@@ -103,6 +118,13 @@ function App() {
             item={selectedItem}
             imageUrl={imageMap[selectedItem.image]}
             onClose={() => setSelectedItem(null)}
+          />
+        )}
+        {showReceipt && (
+          <ReceiptModal
+            items={cart}
+            total={totalAmount}
+            onClose={handleReceiptClose}
           />
         )}
       </div>
