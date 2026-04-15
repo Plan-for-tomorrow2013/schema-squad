@@ -16,16 +16,17 @@ function CartItem({ item, imageUrl }: Props) {
       )}
       <div className="cart-item__info">
         <p className="cart-item__name">{item.name}</p>
+        {item.customisations && item.customisations.length > 0 && (
+          <p className="cart-item__customisation">
+            + {item.customisations.map((c) => c.name).join(', ')}
+          </p>
+        )}
         <p className="cart-item__quantity">Qty: {item.quantity}</p>
         <p className="cart-item__price">
           ${(item.price * item.quantity).toFixed(2)}
         </p>
-        
-        <button
-          onClick={() => removeFromCart(item.id)}
-        >
-          Delete
-        </button>
+
+        <button onClick={() => removeFromCart(item.id)}>Delete</button>
       </div>
     </div>
   )
