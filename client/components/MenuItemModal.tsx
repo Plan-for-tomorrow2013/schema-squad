@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { MenuItem } from '../../models/menuItem.ts'
+import { CustomisationItem } from '../../models/customisationItem.ts'
 import { useAddtoCart } from '../hooks/useCart.ts'
 import { useCustomMenu } from '../hooks/useCustomMenu.ts'
 
@@ -10,9 +12,37 @@ interface Props {
 
 function MenuItemModal({ item, imageUrl, onClose }: Props) {
   const { data } = useCustomMenu(item.id)
-  const {mutate: addToCart } = useAddtoCart()
+  const { mutate: addToCart } = useAddtoCart()
+  const [selectedCustomisations, setSelectedCustomisations] = useState<
+    CustomisationItem[]
+  >([])
 
-  const setSelectedItem = (item) => {}
+  const extrasTotal = selectedCustomisations.reduce(
+    (sum, c) => sum + c.extra_cost,
+    0,
+  )
+  const totalPrice = item.price + extrasTotal
+
+  const handleAddToCart = () => {
+    addToCart({
+      ...item,
+      price: totalPrice,
+      customisations: selectedCustomisations.map(({ name, extra_cost }) => ({
+        name,
+        extra_cost,
+      })),
+    })
+    onClose()
+  }
+
+  const handleSelectCustomisation = (option: CustomisationItem) => {
+    setSelectedCustomisations((prev) =>
+      prev.some((c) => c.id === option.id)
+        ? prev.filter((c) => c.id !== option.id)
+        : [...prev, option],
+    )
+  }
+
   return (
     <div
       className="modal-overlay"
@@ -33,25 +63,29 @@ function MenuItemModal({ item, imageUrl, onClose }: Props) {
 
         {data && data?.length > 0 && (
           <div className="menu-dropdown">
-            {data.map((item) => (
-              <div key={item.id} className="menu-dropdown__item">
-                <button className="menu-dropdown__name">{item.name}</button>
+            {data.map((option) => (
+              <div key={option.id} className="menu-dropdown__item">
+                <button className="menu-dropdown__name">{option.name}</button>
                 <span className="menu-dropdown__price">
-                  ${item.extra_cost.toFixed(2)}
+                  +${option.extra_cost.toFixed(2)}
                 </span>
                 <button
-                  className="menu-dropdown__cart-btn"
-                  onClick={() => setSelectedItem(item)}
+                  className={`menu-dropdown__cart-btn${selectedCustomisations.some((c) => c.id === option.id) ? ' selected' : ''}`}
+                  onClick={() => handleSelectCustomisation(option)}
                 >
-                  +
+                  {selectedCustomisations.some((c) => c.id === option.id)
+                    ? '✓'
+                    : '+'}
                 </button>
               </div>
             ))}
           </div>
         )}
 
-        <p className="modal__price">${item.price.toFixed(2)}</p>
-        <button className="modal__cart-btn" onClick={()=> addToCart(item)}>Add to Cart</button>
+        <p className="modal__price">${totalPrice.toFixed(2)}</p>
+        <button className="modal__cart-btn" onClick={handleAddToCart}>
+          Add to Cart
+        </button>
       </div>
     </div>
   )
