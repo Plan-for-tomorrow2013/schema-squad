@@ -1,4 +1,5 @@
 import { MenuItem } from '../../models/menuItem.ts'
+import { useAddtoCart } from '../hooks/useCart.ts'
 import { useCustomMenu } from '../hooks/useCustomMenu.ts'
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 function MenuItemModal({ item, imageUrl, onClose }: Props) {
   const { data } = useCustomMenu(item.id)
+  const {mutate: addToCart } = useAddtoCart()
 
   const setSelectedItem = (item) => {}
   return (
@@ -49,7 +51,7 @@ function MenuItemModal({ item, imageUrl, onClose }: Props) {
         )}
 
         <p className="modal__price">${item.price.toFixed(2)}</p>
-        <button className="modal__cart-btn">Add to Cart</button>
+        <button className="modal__cart-btn" onClick={()=> addToCart(item)}>Add to Cart</button>
       </div>
     </div>
   )
