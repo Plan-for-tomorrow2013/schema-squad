@@ -18,13 +18,13 @@ function CartModal({ onClose, imageMap, onCheckout }: Props) {
 
   return (
     <div
-      className="modal-overlay"
+      className="cart-modal-overlay"
       role="button"
       tabIndex={0}
       onClick={(e) => e.target === e.currentTarget && onClose()}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
     >
-      <div className="modal" role="dialog" aria-modal="true">
+      <div className="cart-modal" role="dialog" aria-modal="true">
         <button className="modal__close" onClick={onClose}>
           ✕
         </button>
@@ -33,7 +33,7 @@ function CartModal({ onClose, imageMap, onCheckout }: Props) {
           <p>Your cart is empty.</p>
         ) : (
           <>
-            <div className="modal">
+            <div className="cart-items-container">
               {cart.map((item) => (
                 <CartItem
                   key={item.id}
