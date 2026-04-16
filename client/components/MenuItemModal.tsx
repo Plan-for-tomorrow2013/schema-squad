@@ -8,9 +8,10 @@ interface Props {
   item: MenuItem
   imageUrl: string | undefined
   onClose: () => void
+  onAddSuccess: (name: string) => void
 }
 
-function MenuItemModal({ item, imageUrl, onClose }: Props) {
+function MenuItemModal({ item, imageUrl, onClose, onAddSuccess }: Props) {
   const { data } = useCustomMenu(item.id)
   const { mutate: addToCart } = useAddtoCart()
   const [selectedCustomisations, setSelectedCustomisations] = useState<
@@ -32,6 +33,7 @@ function MenuItemModal({ item, imageUrl, onClose }: Props) {
         extra_cost,
       })),
     })
+    onAddSuccess(item.name)
     onClose()
   }
 

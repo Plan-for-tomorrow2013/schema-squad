@@ -26,7 +26,12 @@ function CartItem({ item, imageUrl }: Props) {
           ${(item.price * item.quantity).toFixed(2)}
         </p>
 
-        <button onClick={() => removeFromCart(item.id)}>Delete</button>
+        <button
+          className="cart-item__delete-btn"
+          onClick={() => removeFromCart(item.id)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   )

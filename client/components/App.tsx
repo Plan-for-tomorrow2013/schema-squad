@@ -31,6 +31,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null)
   const [cartOpen, setCartOpen] = useState(false)
   const [showReceipt, setShowReceipt] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -55,6 +56,20 @@ function App() {
     setShowReceipt(false)
   }
 
+  useEffect(() => {
+    if (!toastMessage) return
+
+    const timer = setTimeout(() => {
+      setToastMessage('')
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [toastMessage])
+
+  const handleAddSuccess = (name: string) => {
+    setToastMessage(`${name} added to cart`)
+  }
+
   return (
     <>
       <div className="app">
@@ -67,6 +82,18 @@ function App() {
             className="slide-in"
           />
         </div>
+        {toastMessage && (
+          <div className="toast">
+            <span>{toastMessage}</span>
+            <button
+              className="toast__close"
+              onClick={() => setToastMessage('')}
+              aria-label="Close notification"
+            >
+              ✕
+            </button>
+          </div>
+        )}
         <button
           className="view-menu-btn"
           onClick={() => setMenuOpen((prev) => !prev)}
@@ -118,6 +145,7 @@ function App() {
             item={selectedItem}
             imageUrl={imageMap[selectedItem.image]}
             onClose={() => setSelectedItem(null)}
+            onAddSuccess={handleAddSuccess}
           />
         )}
         {showReceipt && (

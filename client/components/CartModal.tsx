@@ -25,7 +25,9 @@ function CartModal({ onClose, imageMap, onCheckout }: Props) {
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClose()}
     >
       <div className="modal" role="dialog" aria-modal="true">
-        <button onClick={onClose}>x</button>
+        <button className="modal__close" onClick={onClose}>
+          ✕
+        </button>
         <h2>Your Order</h2>
         {cart.length === 0 ? (
           <p>Your cart is empty.</p>
