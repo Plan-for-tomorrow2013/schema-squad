@@ -52,7 +52,7 @@ function App() {
   }
 
   const handleReceiptClose = () => {
-    clearCart()
+    clearCart(true)
     setShowReceipt(false)
   }
 

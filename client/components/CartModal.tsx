@@ -47,7 +47,7 @@ function CartModal({ onClose, imageMap, onCheckout }: Props) {
               <p>
                 Total: <span>${totalAmount.toFixed(2)}</span>
               </p>
-              <button onClick={() => clearCart()}>Clear Cart</button>
+              <button onClick={() => clearCart(true)}>Clear Cart</button>
 
               <button
                 onClick={() => {

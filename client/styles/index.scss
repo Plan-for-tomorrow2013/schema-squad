@@ -403,6 +403,7 @@ h1 {
 .cart-item {
   display: flex;
   align-items: center;
+
   gap: 16px;
   padding: 12px;
   border: 1px solid #e6e6e6;
@@ -411,8 +412,8 @@ h1 {
 }
 
 .cart-item__image {
-  width: 84px;
-  height: 84px;
+  width: 60px;
+  height: 60px;
   object-fit: cover;
   border-radius: 12px;
   flex-shrink: 0;
@@ -421,8 +422,17 @@ h1 {
 .cart-item__info {
   flex: 1;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cart-item__details {
+  display: flex;
   flex-direction: column;
   gap: 4px;
+  flex: 1;
 }
 
 .cart-item__name {
@@ -442,29 +452,38 @@ h1 {
   margin: 0;
   font-size: 0.92rem;
   color: #666;
+  white-space: nowrap;
 }
 
 .cart-item__price {
-  margin: 2px 0 0;
+  margin: 0;
   font-size: 1rem;
   font-weight: 700;
   color: #111;
+  white-space: nowrap;
 }
 
-.cart-item__delete-btn {
-  margin-top: 8px;
-  align-self: flex-start;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 14px;
-  background: #f2dede;
-  color: #8a1f1f;
-  font-weight: 700;
-  cursor: pointer;
+.cart-item__actions {
+  display: flex;
+  align-items: center;
 }
 
-.cart-item__delete-btn:hover {
-  background: #e8caca;
+
+
+.cart-item__quantity-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.cart-item__quantity-input {
+  width: 50px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.92rem;
 }
 
 .receipt__items {
