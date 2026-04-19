@@ -48,15 +48,17 @@ export function useAddtoCart() {
   })
 }
 
-export function useRemoveFromCart() {
+export function useUpdateCartQuantity() {
   const queryClient = useQueryClient()
-  return useCartMutation(async (id: number) => {
-    const cart = queryClient.getQueryData<CartItem[]>(['cart']) || []
-    queryClient.setQueryData(
-      ['cart'],
-      cart.filter((i) => i.id !== id),
-    )
-  })
+  return useCartMutation(
+    async ({ id, quantity }: { id: number; quantity: number }) => {
+      const cart = queryClient.getQueryData<CartItem[]>(['cart']) || []
+      const nextCart = cart
+        .map((item) => (item.id === id ? { ...item, quantity } : item))
+        .filter((item) => item.quantity > 0)
+      queryClient.setQueryData(['cart'], nextCart)
+    },
+  )
 }
 
 export function useClearCart() {
