@@ -1,155 +1,68 @@
-# Schema Squad
-Created by Tania, Carol, Nyree, Ezra, Justin
+# Schema Squad 🍽️
 
-Schema Squad is a group project built as a full-stack restaurant ordering app. The goal of the project was to practise working as a team across the full web stack while building a product that lets users browse a menu, customise items, manage a cart, and complete a simple checkout flow.
+A full-stack restaurant ordering app built as a group project at Dev Academy Aotearoa.
 
-## Project Overview
+Created by Tania, Carol, Nyree, Ezra and Justin.
 
-This app simulates a digital restaurant ordering experience. Users can:
+## What it does
 
-- view menu items loaded from a backend API
-- open an item modal to read the description and see the price
-- choose optional customisations for selected menu items
-- add items to a cart
-- update quantities or clear the cart
-- complete checkout and view a receipt summary
-
-The project uses a React frontend, an Express API, and a SQLite database managed with Knex.
+Schema Squad simulates a digital restaurant ordering experience. 
+Users can:
+- Browse menu items loaded from a backend API
+- Open an item modal to read descriptions and see prices
+- Choose optional customisations for selected menu items
+- Add items to a cart
+- Update quantities or clear the cart
+- Complete checkout and view a receipt summary
 
 ## Tech Stack
-
-- React
-- TypeScript
-- Vite
-- Sass
-- Express
-- Knex
-- SQLite3
-- TanStack React Query
-- Vitest
+TypeScript · React · Vite · Sass · Express · Knex · SQLite3 · TanStack React Query · Vitest
 
 ## Features
 
-### Frontend
+**Frontend**
+- Slideshow-style landing page for featured menu images
+- Menu dropdown with pricing
+- Item detail modal
+- Optional item customisations
+- In-app cart management
+- Receipt modal after checkout
 
-- slideshow-style landing page for featured menu images
-- menu dropdown with pricing
-- item detail modal
-- optional item customisations
-- in-app cart management
-- receipt modal after checkout
+**Backend**
+- `GET /api/v1/menu` — fetch all menu items
+- `GET /api/v1/customMenu` — fetch all customisation items
+- `GET /api/v1/customMenu/:id` — fetch customisations for a specific menu item
 
-### Backend
-
-- `GET /api/v1/menu` to fetch all menu items
-- `GET /api/v1/customMenu` to fetch all customisation items
-- `GET /api/v1/customMenu/:id` to fetch customisations for a menu item
-
-### Database
-
-The database schema includes tables for:
-
-- `menu_items`
-- `custom_items`
-- `menu_order`
-- `customisation_order`
-- `table_order`
-- `receipt`
-
-The app currently uses seeded menu and customisation data. Cart behaviour is handled on the client side.
+**Database**
+Schema includes tables for menu items, customisations, orders and receipts. App uses seeded menu and customisation data with client-side cart state management.
 
 ## Getting Started
 
-### 1. Clone the repository
-
 ```bash
-git clone git@github.com:pikopiko-2025/schema-squad.git
+git clone git@github.com:Plan-for-tomorrow2013/schema-squad.git
 cd schema-squad
-```
-
-### 2. Install dependencies
-
-```bash
 npm install
-```
-
-### 3. Run database migrations
-
-```bash
 npm run knex -- migrate:latest
-```
-
-### 4. Seed the database
-
-```bash
 npm run knex -- seed:run
-```
-
-### 5. Start the development servers
-
-```bash
 npm run dev
 ```
 
-The app will run at:
-
-- client: http://localhost:5173
-- server: http://localhost:3000
-
-## Available Scripts
-
-```bash
-npm run dev
-npm run build
-npm start
-npm run lint
-npm test
-```
-
-## Project Structure
-
-```text
-client/
-	apis/          API request helpers
-	components/    React components
-	hooks/         React Query hooks and cart state
-	styles/        Sass styling
-
-models/          Shared TypeScript interfaces
-
-server/
-	routes/        Express routes
-	db/
-		migrations/  Database schema
-		seeds/       Seed data
-```
-
-## Seeded Menu Examples
-
-The project includes seeded sample items such as:
-
-- Salmon Bowl
-- Sushi
-- Spring Rolls
-- Sundae
-- Smoothie
-- Smash Burger
-- Steak
-- Sliders
-
-Some menu items also include optional extras, such as sprinkles, side salad, secret sauce, and swiss cheese.
+Client runs at http://localhost:5173  
+Server runs at http://localhost:3000
 
 ## What We Learned
+- Working in Git as a team
+- Keeping frontend and backend data structures aligned
+- Designing a database schema for menu and order data
+- Managing client-side state cleanly
+- Iterating on UI features from a starter template
 
-This project helped us build experience with:
+## Team Roles
+- 🌟 **Vibes Watcher** — Carol
+- 🔐 **Git Keeper** — Nyree  
+- 👑 **Product Owner** — Ezra
+- 🏃 **Scrum Facilitator** — Justin
+- ⚡ **Super 2IC** — Tania (that's me!)
 
-- working in Git as a team
-- keeping frontend and backend data structures aligned
-- designing a database schema for menu and order data
-- managing client-side state cleanly
-- iterating on UI features from a starter template
-
-
-## Note
-
-This project began from a Dev Academy full-stack starter and was adapted by our group into a restaurant ordering application.
+## Status
+✅ Completed — Dev Academy group project
